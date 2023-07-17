@@ -65,9 +65,26 @@ const char *Plugin::GetPluginDescription(void)
 	return PLUGIN_NAME " v" PLUGIN_VERSION;
 }
 
-CON_COMMAND(lua, "Run Lua string")
+CON_COMMAND(lua, "Execute text as Lua code")
 {
-	if (luaL_dostring(L, args.ArgS()) != LUA_OK)
+	if (args.ArgC() == 1)
+	{
+		Warning("Usage: lua SOME LUA CODE\n");
+		Msg(
+			"Quote handling depends on number of arguments:\n"
+			"  1  outermost quotes are stripped\n"
+			"  2+ all quotes are preserved\n"
+			"Examples:\n"
+			"  lua print \"hello world\"     ~> print \"hello world\"\n"
+			"  lua \"local i = 1; print(i)\" ~> local i = 1; print(i)\n"
+		);
+		return;
+	}
+
+	// This way the command with with or without quoted parameter.
+	auto arg = args.ArgC() == 2 ? args.Arg(1) : args.ArgS();
+
+	if (luaL_dostring(L, arg) != LUA_OK)
 	{
 		Warning("%s\n", lua_tostring(L, -1));
 		lua_pop(L, 1);  // pop error message
