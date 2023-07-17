@@ -1,6 +1,6 @@
 #pragma once
 
-#define PLUGIN_NAME "Plugin Template"
+#define PLUGIN_NAME "Lua"
 #define PLUGIN_VERSION_MAJOR 1
 #define PLUGIN_VERSION_MINOR 0
 #define PLUGIN_VERSION_PATCH 0

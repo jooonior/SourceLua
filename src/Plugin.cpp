@@ -33,7 +33,7 @@ Plugin::~Plugin() {}
 
 bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServerFactory)
 {
-	PluginMsg("Loading version %s\n", PLUGIN_VERSION);
+	PluginMsg("Loading plugin version %s\n", PLUGIN_VERSION);
 
 	L = LuaInit();
 	if (L == nullptr)
@@ -41,6 +41,8 @@ bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServ
 		PluginWarning("Failed to create Lua state.");
 		return false;
 	}
+
+	PluginMsg("%s (%s)\n", LUAJIT_VERSION, LUA_VERSION);
 
 	ConnectTier1Libraries(&interfaceFactory, 1);
 
@@ -70,15 +72,4 @@ CON_COMMAND(lua, "Run Lua string")
 		Warning("%s\n", lua_tostring(L, -1));
 		lua_pop(L, 1);  // pop error message
 	}
-}
-
-CON_COMMAND(greet, "Say hello :)")
-{
-	if (args.ArgC() != 2)
-	{
-		Warning("Usage: greet <name>\n");
-		return;
-	}
-
-	ConMsg("Hello %s!\n", args.Arg(1));
 }
