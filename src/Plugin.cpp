@@ -84,9 +84,5 @@ CON_COMMAND(lua, "Execute text as Lua code")
 	// This way the command with with or without quoted parameter.
 	auto arg = args.ArgC() == 2 ? args.Arg(1) : args.ArgS();
 
-	if (luaL_dostring(L, arg) != LUA_OK)
-	{
-		Warning("%s\n", lua_tostring(L, -1));
-		lua_pop(L, 1);  // pop error message
-	}
+	LuaRunChunk(L, arg);
 }
