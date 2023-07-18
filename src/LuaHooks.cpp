@@ -102,10 +102,22 @@ bool LuaRunChunk(lua_State *L, const char *chunk)
 	lua_insert(L, 1);
 
 	// Run chunk.
-	if (lua_pcall(L, 0, 0, 1) != LUA_OK)
+	if (lua_pcall(L, 0, LUA_MULTRET, 1) != LUA_OK)
 	{
 		Warning("%s\n", lua_tostring(L, -1));
 		lua_pop(L, 1);
+	}
+	else if (lua_gettop(L) > 1)
+	{
+		// Print returned values.
+		lua_getglobal(L, "print");
+		lua_insert(L, 2);
+		if (lua_pcall(L, lua_gettop(L) - 2, 0, 1) != LUA_OK)
+		{
+			Warning("%s\n", lua_tostring(L, -1));
+			lua_pop(L, 1);
+			// This error is not an issue with the chunk.
+		}
 	}
 
 	// Pop error handler.
