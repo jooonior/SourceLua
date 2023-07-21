@@ -7,6 +7,7 @@
 
 #include <lua.hpp>
 #include <tier1/tier1.h>
+#include <tier2/tier2.h>
 
 #define QUOTE(name) #name
 #define STR(macro) QUOTE(macro)
@@ -45,6 +46,7 @@ bool Plugin::Load(CreateInterfaceFn interfaceFactory, CreateInterfaceFn gameServ
 	PluginMsg("%s (%s)\n", LUAJIT_VERSION, LUA_VERSION);
 
 	ConnectTier1Libraries(&interfaceFactory, 1);
+	ConnectTier2Libraries(&interfaceFactory, 1);
 
 	ConVar_Register();
 
@@ -57,6 +59,7 @@ void Plugin::Unload(void)
 
 	LuaDestroy(L);
 
+	DisconnectTier2Libraries();
 	DisconnectTier1Libraries();
 }
 
