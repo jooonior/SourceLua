@@ -15,7 +15,7 @@
 
 #define PLUGIN_VERSION STR(PLUGIN_VERSION_MAJOR) "." STR(PLUGIN_VERSION_MINOR) "." STR(PLUGIN_VERSION_PATCH)
 
-static lua_State *L;
+static lua_State *L = nullptr;
 
 class Plugin : public ServerPluginCallbacks
 {
@@ -116,4 +116,14 @@ CON_COMMAND(lua_file, "Execute Lua file")
 	PluginMsg("Executing file: %s\n", absolute_path);
 
 	LuaRunFile(L, absolute_path, args.ArgC() - 2, args.ArgV() + 2);
+}
+
+CON_COMMAND(lua_restart, "Restart the Lua execution environment")
+{
+	if (L)
+	{
+		LuaDestroy(L);
+	}
+
+	L = LuaInit();
 }
