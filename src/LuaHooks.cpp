@@ -32,6 +32,7 @@ static void stringify_stack(lua_State *L, int count)
 	lua_pop(L, 1);
 }
 
+template<void(*Print)(const char *, ...)>
 static int l_print(lua_State *L)
 {
 	int arg_count = lua_gettop(L);
@@ -41,12 +42,12 @@ static int l_print(lua_State *L)
 	for (int i = 1; i <= arg_count; i++)
 	{
 		if (i > 1)
-			Msg("\t");
+			Print("\t");
 
-		Msg("%s", lua_tostring(L, i));
+		Print("%s", lua_tostring(L, i));
 	}
 
-	Msg("\n");
+	Print("\n");
 
 	lua_pop(L, arg_count);
 	return 0;
@@ -67,7 +68,8 @@ lua_State *LuaInit()
 
 	luaL_openlibs(L);
 
-	lua_setglobalfunction(L, "print", l_print);
+	lua_setglobalfunction(L, "print", l_print<Msg>);
+	lua_setglobalfunction(L, "warn", l_print<Warning>);
 
 	return L;
 }
