@@ -8,6 +8,7 @@
 #include <lua.hpp>
 #include <tier1/tier1.h>
 #include <tier2/tier2.h>
+#include <filesystem.h>
 
 #define QUOTE(name) #name
 #define STR(macro) QUOTE(macro)
@@ -88,4 +89,31 @@ CON_COMMAND(lua, "Execute text as Lua code")
 	auto arg = args.ArgC() == 2 ? args.Arg(1) : args.ArgS();
 
 	LuaRunChunk(L, arg);
+}
+
+CON_COMMAND(lua_file, "Execute Lua file")
+{
+	if (args.ArgC() < 2)
+	{
+		Warning("Usage: lua_file <file path> [args]...\n");
+		Msg(
+			"Resolved file path and arguments are passed to the script.\n"
+		);
+		return;
+	}
+
+	auto relative_path = args.Arg(1);
+
+	char buffer[MAX_PATH];
+	auto absolute_path = g_pFullFileSystem->RelativePathToFullPath_safe(relative_path, nullptr, buffer);
+
+	if (absolute_path == nullptr)
+	{
+		PluginWarning("'%s' not found; not executing\n", relative_path);
+		return;
+	}
+
+	PluginMsg("Executing file: %s\n", absolute_path);
+
+	LuaRunFile(L, absolute_path, args.ArgC() - 2, args.ArgV() + 2);
 }
