@@ -127,3 +127,8 @@ CON_COMMAND(lua_restart, "Restart the Lua execution environment")
 
 	L = LuaInit();
 }
+
+CON_COMMAND(lua_version, "Print plugin version and information about Lua binaries")
+{
+	PluginMsg("Plugin version %s, %s (%s)\n", PLUGIN_VERSION, LUAJIT_VERSION, LUA_VERSION);
+}
