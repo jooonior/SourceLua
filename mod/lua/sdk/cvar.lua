@@ -5,6 +5,9 @@ local clib = binding:open(assert(package.searchpath('sdk/cvar', package.cpath)))
 
 local M = {}
 
+-- Can't let this get garbage collected.
+M.__clib = clib
+
 M.CVAR_INTERFACE_VERSION = clib.INTERFACE_VERSION
 
 hooks.forward {

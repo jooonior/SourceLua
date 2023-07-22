@@ -3,9 +3,10 @@ local hooks = require 'core.hooks'
 local M = {}
 
 local function loadlib(name)
-  for k, v in pairs(require(name)) do
-    M[k] = v
-  end
+  local lib = require(name)
+  -- Prepend `lib` to our `__index` lookup chain.
+  setmetatable(lib, { __index = getmetatable(M) })
+  setmetatable(M, { __index = lib })
 end
 
 local function create_interface(module, interface, cast)
