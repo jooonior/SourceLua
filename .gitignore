@@ -1,5 +1,8 @@
 # Generated game files.
-/mod/
+/mod/**
+# But not Lua scripts (or directories containing them).
+!/mod/**/
+!/mod/**/*.lua
 
 
 ## Ignore Visual Studio temporary files, build results, and
