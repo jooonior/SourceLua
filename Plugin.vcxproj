@@ -49,6 +49,7 @@
     <LocalDebuggerWorkingDirectory>$(HL2_EXE)\..</LocalDebuggerWorkingDirectory>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\</IntDir>
+    <TargetName>lua</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CustomBuildAfterTargets>PostBuildEvent</CustomBuildAfterTargets>
@@ -58,6 +59,7 @@
     <LocalDebuggerWorkingDirectory>$(HL2_EXE)\..</LocalDebuggerWorkingDirectory>
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\$(Configuration)\</IntDir>
+    <TargetName>lua</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
