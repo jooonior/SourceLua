@@ -70,6 +70,7 @@ lua_State *LuaInit()
 
 	lua_setglobalfunction(L, "print", l_print<Msg>);
 	lua_setglobalfunction(L, "warn", l_print<Warning>);
+	lua_setglobalfunction(L, "debug", l_print<DevMsg>);
 
 	return L;
 }
