@@ -128,10 +128,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\LuaHooks.hpp" />
     <ClInclude Include="src\Plugin.hpp" />
     <ClInclude Include="src\ServerPluginCallbacks.hpp" />
     <ClInclude Include="src\stdafx.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\Plugin.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
