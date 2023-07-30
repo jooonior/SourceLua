@@ -132,6 +132,14 @@ Only a small subset of what is offered by the SDK is currently implemented.
 
 ## Good Luck!
 
+Documentation is a bit scarce right now. Your best bet is looking at the
+[included Lua modules](https://github.com/jooonior/SourceLua/tree/master/mod/lua)
+to see what's available. There are also some
+[example plugins](https://github.com/jooonior/SourceLua/tree/master/examples)
+that should help you get started.
+
+Here's a few additional tips that come to mind:
+
 - Get familiar with the [LuaJIT FFI library](https://luajit.org/ext_ffi.html),
   you will need it.
 
